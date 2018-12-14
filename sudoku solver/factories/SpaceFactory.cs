@@ -9,7 +9,9 @@ namespace sudoku_solver.factories
 {
     public class SpaceFactory
     {
-
+        /*
+         * generates all the spaces based on a loaded file
+         */
         public int maxvalue { get; set; }
         private string defaultLocation;
 
@@ -18,11 +20,24 @@ namespace sudoku_solver.factories
             this.defaultLocation = AppDomain.CurrentDomain.BaseDirectory + @"..\..\samples\1.txt";
         }
 
+
+        /*
+         * loads 1.txt found in samples
+         * 
+         * returns 2d list of spaces
+         */
         public List<List<Space>> LoadDefault()
         {
             return GenerateSpaces(defaultLocation, 9);
         }
 
+        /*
+         * loads file from given location and generates spaces
+         * 
+         * if file loading fails, 1.txt is loaded
+         * 
+         * returns 2d list of spaces
+         */ 
         public List<List<Space>> GenerateSpaces(string location, int maxValue)
         {
             List<List<Space>> spaces = new List<List<Space>>();

@@ -7,9 +7,18 @@ using System.Threading.Tasks;
 
 namespace sudoku_solver.algoritms.tactics
 {
+
+
+    /*
+     * Static class that contains various common resources
+     */
     class CommonActions
     {
 
+        /* 
+         * Dictionary containing the coordinates of each square found on the board
+         * uses the coordinates of the top left space of each square as the key
+         */
         public readonly static Dictionary<string, List<string>> squares = new Dictionary<string, List<string>>
         {
             { "0,0", new List<string> { "0,0", "1,0", "2,0", "0,1", "1,1", "2,1", "0,2", "1,2", "2,2" } },
@@ -26,6 +35,9 @@ namespace sudoku_solver.algoritms.tactics
         };
 
 
+        /*
+         * searches the board for spaces with values and updates the posibilities of surounding spaces
+         */
         static public void UpdatePosibilities(Board b)
         {
             for (int y = 0; y < b.Spaces.Count; y++)
@@ -41,6 +53,10 @@ namespace sudoku_solver.algoritms.tactics
             }
         }
 
+
+        /*
+         * Removes the given posibility from spaces around a specific space
+         */
         static public void RemoveSpecificPosibility(int y, int x, int value, Board b)
         {
             //collect coords of square
@@ -49,9 +65,11 @@ namespace sudoku_solver.algoritms.tactics
             {
                 Console.WriteLine("coord too high! x:{0} y:{1}", x, y);
             }
+            //determine square by calculating the coordinates of the top left space
             int sX = 3 * (x / 3);
             int sY = 3 * (y / 3);
-
+            
+            //retrieve coordinates contained in the square
             List<string> square = squares[sX + "," + sY];
 
             for (int i = 0; i < b.Spaces.Count; i++)

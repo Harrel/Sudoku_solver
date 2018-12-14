@@ -13,7 +13,11 @@ namespace sudoku_solver.algoritms
 
         private List<ITactic> tactics;
 
-
+        /*
+         * The basic solver
+         * It uses two tactics to solve puzzles
+         * the tactics are arranged so that the quicker tactic always acts first
+         */
         public SimpleSolver()
         {
             this.tactics = new List<ITactic>();
@@ -65,6 +69,11 @@ namespace sudoku_solver.algoritms
             return b.Solved;
         }
 
+
+        /*
+         * prints the completed list as a grid in the console
+         * 
+         */ 
         private void printCompleted(List<Space> l)
         {
             int[,] board = new int[9,9];
@@ -98,6 +107,9 @@ namespace sudoku_solver.algoritms
         }
 
 
+        /*
+         * prints the boards in the console 
+         */
         private void printBoard(Board b)
         {
             Console.WriteLine("================");

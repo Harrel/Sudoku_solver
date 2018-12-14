@@ -11,7 +11,10 @@ namespace sudoku_solver.algoritms.tactics
     {
 
         
-
+        /*
+         * Basic tactic scans board for spaces with only one posibility
+         * If found, it is filled in and returns true
+         */
         public SingleEliminationTactic()
         {
 

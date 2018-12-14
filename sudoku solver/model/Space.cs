@@ -58,6 +58,10 @@ namespace sudoku_solver
             
         }
 
+        /*
+         * resets value of space if space didn't have an initial value
+         * 
+         */
         public void reset()
         {
             if(initialValue < 1)
@@ -79,6 +83,11 @@ namespace sudoku_solver
             }
         }
 
+        /*
+         * removes a given number as a posibility
+         * 
+         * returns true if succesfully removed
+         */
         public bool RemovePosibility(int pos)
         {
             //remove a possible number

@@ -9,7 +9,13 @@ namespace sudoku_solver.algoritms.tactics
 {
     class SinglePossibilityTactic : ITactic
     {
-
+        /*
+         * Collects posibilities from each row column and square
+         * Checks if a posibility only apears once in its row column or square
+         * if so, fill the posibility in the space it appears in
+         * 
+         * returns true if a space could be filled in
+         */
         public SinglePossibilityTactic()
         {
 
@@ -81,7 +87,7 @@ namespace sudoku_solver.algoritms.tactics
                         occurenceDictionaries[1][posi].Add("" + i + e);
                     }
 
-                    ////scan the square
+                    //scan the square
                     string[] coords = CommonActions.squares[squareKey][e].Split(',');
                     int sX = Int32.Parse(coords[0]);
                     int sY = Int32.Parse(coords[1]);

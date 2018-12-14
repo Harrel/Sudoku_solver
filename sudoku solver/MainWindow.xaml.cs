@@ -42,7 +42,6 @@ namespace sudoku_solver
             solver = new SimpleSolver();
             fac = new SpaceFactory();
             MyBoard = new Board(fac.LoadDefault());
-            //setupBlocks();
 
             timer = new Stopwatch();
 
