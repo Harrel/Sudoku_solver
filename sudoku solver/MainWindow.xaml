@@ -1,0 +1,263 @@
+﻿<Window x:Class="sudoku_solver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:sudoku_solver"
+        mc:Ignorable="d"
+        Title="Sudoku Solver" Height="600" Width="500">
+    <Window.Resources>
+        <Style x:Key="Textblockstyle" TargetType="Grid">
+            <Style.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+    
+    <StackPanel>
+        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open" Click="open_Click"/>
+                    <Separator/>
+                    <MenuItem Header="_Exit" Click="exit_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        
+        <StackPanel Margin="20" VerticalAlignment="Center">
+            <TextBlock x:Name="timerBlock">Time:</TextBlock>
+            <Button Click="buttonClick">refresh</Button>
+            <TextBlock x:Name="tooltips"></TextBlock>
+        </StackPanel>
+        <Border BorderBrush="Black" BorderThickness="2" Height="400" Width="400">
+            <Grid Style="{StaticResource Textblockstyle}" VerticalAlignment="Center" ShowGridLines="True" Height="400" Width="400" x:Name="visualBoard">
+                <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+                <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp00" ></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp10"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp20"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp01"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp11"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp21"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp02"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp12"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp22"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp30"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp40"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp50"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp31"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp41"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp51"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp32"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp42"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp52"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp60"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp70"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp80"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp61"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp71"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp81"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp62"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp72"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp82"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp03"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp13"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp23"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp04"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp14"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp24"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp05"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp15"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp25"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp33"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp43"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp53"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp34"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp44"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp54"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp35"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp45"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp55"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp63"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp73"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp83"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp64"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp74"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp84"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp65"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp75"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp85"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp06"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp16"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp26"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp07"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp17"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp27"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp08"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp18"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp28"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s7">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp36"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp46"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp56"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp37"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp47"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp57"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp38"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp48"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp58"></TextBlock>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                    <Grid ShowGridLines="True" x:Name="s8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="sp66"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="sp76"></TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" x:Name="sp86"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="sp67"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="sp77"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="sp87"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="sp68"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="sp78"></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="sp88"></TextBlock>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </StackPanel>
+    
+</Window>
